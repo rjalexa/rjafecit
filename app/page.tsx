@@ -1,7 +1,13 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
+import {
+  ClerkLoading,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from '@clerk/nextjs';
 
 interface SmorfiaEntry {
   number: number;
@@ -185,6 +191,9 @@ export default function Home() {
               </li>
             </ul>
           </div>
+          <ClerkLoading>
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+          </ClerkLoading>
           <SignedOut>
             <SignInButton />
           </SignedOut>
@@ -199,6 +208,9 @@ export default function Home() {
           <div className="hero bg-base-200 rounded-box glass">
             <div className="hero-content text-center">
               <div className="max-w-md">
+                <ClerkLoading>
+                  <div className="h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+                </ClerkLoading>
                 <SignedIn>
                   <h1 className="text-5xl font-bold">Welcome</h1>
                   <p className="py-6">

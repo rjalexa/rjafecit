@@ -5,7 +5,7 @@ const nextConfig = {
       {
         source: '/api/v1/random',
         destination: `${
-          process.env.NEXT_PUBLIC_BACKEND_API_BASE || 'http://localhost:8080'
+          process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080'
         }/api/v1/random`,
       },
     ];
