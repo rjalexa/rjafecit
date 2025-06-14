@@ -31,6 +31,10 @@ graph TD
         D[API Route: /api/v1/random]
     end
 
+     subgraph "FastAPI Container"
+        F[/data/smorfia.json on filesystem]
+    end
+
     A -- "fetch('/api/v1/smorfia')" --> B
     B -- "Handles internally" --> C
     C -- "Response" --> B
@@ -38,6 +42,7 @@ graph TD
 
     A -- "fetch('/api/v1/random')" --> B
     B -- "Passes to Rewrite Engine" --> E
+    C -- "Reads" --> F
     E -- "Proxies to FastAPI container" --> D
     D -- "Response" --> E
     E -- "Response" --> B
