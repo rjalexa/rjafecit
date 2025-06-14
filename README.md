@@ -31,18 +31,18 @@ graph TD
         D[API Route: /api/v1/random]
     end
 
-     subgraph "Smorfia definitions"
+    subgraph "Smorfia definitions"
         F[/data/smorfia.json on filesystem]
     end
 
     A -- "fetch('/api/v1/smorfia')" --> B
     B -- "Handles internally" --> C
+    C -- "Reads" --> F
     C -- "Response" --> B
     B -- "Response" --> A
 
     A -- "fetch('/api/v1/random')" --> B
     B -- "Passes to Rewrite Engine" --> E
-    C -- "Reads" --> F
     E -- "Proxies to FastAPI container" --> D
     D -- "Response" --> E
     E -- "Response" --> B
