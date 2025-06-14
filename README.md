@@ -79,27 +79,57 @@ sequenceDiagram
 
 ### Environment Variables
 
-Create a `.env.local` file in the root of the project by copying the `.env.example` file:
+This project requires two separate environment files for local development and Docker-based development.
+
+#### Local Development (`.env.local`)
+
+For running the application locally with `pnpm`, create a `.env.local` file by copying the example:
 
 ```bash
 cp .env.example .env.local
 ```
 
-You will need to add your Clerk credentials to this file:
+Update `.env.local` with your Clerk credentials and ensure the backend API URL is set to `http://localhost:8080`:
 
 ```dotenv
+# .env.local
+
 # Clerk Keys
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 CLERK_SECRET_KEY=your_clerk_secret_key
 
 # API Configuration
-RANDOM_API_BASE=http://backend:8080
+NEXT_PUBLIC_BACKEND_API_BASE=http://localhost:8080
 
 # Port Configuration
 PORT=3000
 ```
 
-To get your Clerk credentials:
+#### Docker Development (`.env.docker`)
+
+For running the application with Docker, create a `.env.docker` file:
+
+```bash
+cp .env.example .env.docker
+```
+
+Update `.env.docker` with your Clerk credentials. The backend API URL must be set to `http://backend:8080` to allow the front-end container to communicate with the back-end container:
+
+```dotenv
+# .env.docker
+
+# Clerk Keys
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+
+# API Configuration
+NEXT_PUBLIC_BACKEND_API_BASE=http://backend:8080
+
+# Port Configuration
+PORT=3000
+```
+
+**To get your Clerk credentials:**
 1. Log in to https://dashboard.clerk.com → select your app.
 2. Open API Keys in the left-hand navigation.
 
