@@ -28,7 +28,7 @@ graph TD
     end
 
     subgraph "FastAPI Container"
-        D[Python Backend on Port 8080]
+        D[API Route: /api/v1/random]
     end
 
     A -- "fetch('/api/v1/smorfia')" --> B
