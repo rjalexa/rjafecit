@@ -22,17 +22,31 @@ graph TD
     end
 
     subgraph "Docker Environment"
-        B[Web Service on Port 3000]
-        C[Backend Service on Port 8080]
+        subgraph "Web Service (Port 3000)"
+            B[Next.js Backend]
+            E[data/smorfia_napoletana.json]
+        end
+        subgraph "Backend Service (Port 8080)"
+            C[FastAPI Backend]
+        end
     end
 
     D[Clerk]
 
-    A -- "Fetches data" --> B
-    B -- "/api/random" --> C
-    B -- "/api/v1/smorfia" --> C
+    A -- "/api/random" --> B
+    B -- "Proxies to /api/v1/random" --> C
+    A -- "/api/v1/smorfia" --> B
+    B -- "Reads from" --> E
     A -- "Authentication" --> D
 ```
+
+### Backend API
+
+The application uses two different backend endpoints to provide data to the frontend:
+
+-   **/api/random**: This endpoint is a Next.js API route that acts as a proxy to the FastAPI backend. It forwards requests to the `/api/v1/random` endpoint on the backend service, which is running in a separate Docker container on port 8080. This approach is used to avoid CORS issues and to keep the frontend code clean and simple.
+
+-   **/api/v1/smorfia**: This endpoint is also a Next.js API route, but it is served directly by the Next.js backend. It reads the `smorfia_napoletana.json` file from the `data` directory and returns its contents to the frontend. This is a simple and efficient way to serve static data that does not require a separate backend service.
 
 ### Authentication Flow
 

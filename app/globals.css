@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    background-image: radial-gradient(
+      circle at top right,
+      hsl(var(--p) / 0.1),
+      transparent
+    ),
+    radial-gradient(circle at bottom left, hsl(var(--s) / 0.1), transparent);
+    background-attachment: fixed;
+  }
+}

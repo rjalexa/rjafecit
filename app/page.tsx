@@ -12,14 +12,14 @@ export default function Home() {
   const [smorfiaData, setSmorfiaData] = useState<SmorfiaEntry[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [theme, setTheme] = useState('system');
+  const [theme, setTheme] = useState('rja-fecit');
   const [sortConfig, setSortConfig] = useState<{
     key: keyof SmorfiaEntry;
     direction: 'ascending' | 'descending';
   } | null>(null);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || 'system';
+    const savedTheme = localStorage.getItem('theme') || 'rja-fecit';
     setTheme(savedTheme);
   }, []);
 
@@ -155,6 +155,28 @@ export default function Home() {
                   type="radio"
                   name="theme-dropdown"
                   className="theme-controller btn btn-sm btn-block btn-ghost justify-start"
+                  aria-label="RJA Fecit"
+                  value="rja-fecit"
+                  checked={theme === 'rja-fecit'}
+                  onChange={() => handleThemeChange('rja-fecit')}
+                />
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  name="theme-dropdown"
+                  className="theme-controller btn btn-sm btn-block btn-ghost justify-start"
+                  aria-label="Cyberpunk"
+                  value="cyberpunk"
+                  checked={theme === 'cyberpunk'}
+                  onChange={() => handleThemeChange('cyberpunk')}
+                />
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  name="theme-dropdown"
+                  className="theme-controller btn btn-sm btn-block btn-ghost justify-start"
                   aria-label="Light"
                   value="light"
                   checked={theme === 'light'}
@@ -196,85 +218,85 @@ export default function Home() {
 
       <main className="flex-grow flex flex-col items-center p-4 sm:p-8">
         <div className="w-full max-w-4xl">
-          <div className="hero bg-base-200 rounded-box">
+          <div className="hero bg-base-200 rounded-box glass">
             <div className="hero-content text-center">
               <div className="max-w-md">
                 <SignedIn>
                   <h1 className="text-5xl font-bold">Welcome</h1>
-                <p className="py-6">
-                  Click the button below to fetch a new set of random numbers.
-                </p>
-                <button
-                  className="btn btn-primary"
-                  onClick={fetchSmorfiaData}
-                  disabled={isLoading}
-                >
-                  {isLoading ? 'Loading...' : 'Get Random'}
-                </button>
-              </SignedIn>
-              <SignedOut>
-                <h1 className="text-5xl font-bold">Hello there</h1>
-                <p className="py-6">
-                  Please log in to use the application.
-                </p>
-                <SignInButton>
-                  <button className="btn btn-primary">Get Started</button>
-                </SignInButton>
-              </SignedOut>
-            </div>
-          </div>
-        </div>
-
-        {error && (
-          <div className="toast toast-top toast-center">
-            <div className="alert alert-error">
-              <span>{error}</span>
-            </div>
-          </div>
-        )}
-
-        {isLoading && (
-          <div className="mt-8 text-center">
-            <span className="loading loading-lg loading-spinner text-primary"></span>
-            <p>Fetching the numbers from the oracle...</p>
-          </div>
-        )}
-
-        {smorfiaData.length > 0 && (
-          <div className="mt-8 card bg-base-200 shadow-xl w-full">
-            <div className="card-body">
-              <h2 className="card-title">La Smorfia Napoletana</h2>
-              <div className="overflow-x-auto">
-                <table className="table table-zebra w-full">
-                  <thead>
-                    <tr>
-                      <th
-                        className="cursor-pointer w-1/4 text-right pr-2"
-                        onClick={() => requestSort('number')}
-                      >
-                        Number {getSortIndicator('number')}
-                      </th>
-                      <th
-                        className="cursor-pointer"
-                        onClick={() => requestSort('meaning')}
-                      >
-                        Meaning {getSortIndicator('meaning')}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {sortedSmorfiaData.map((item) => (
-                      <tr key={item.number}>
-                        <th className="text-right pr-2">{item.number}</th>
-                        <td className="pl-2 text-lg">{item.meaning}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                  <p className="py-6">
+                    Click the button below to fetch a new set of random numbers.
+                  </p>
+                  <button
+                    className="btn btn-primary"
+                    onClick={fetchSmorfiaData}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? 'Loading...' : 'Get Random'}
+                  </button>
+                </SignedIn>
+                <SignedOut>
+                  <h1 className="text-5xl font-bold">Hello there</h1>
+                  <p className="py-6">
+                    Please log in to use the application.
+                  </p>
+                  <SignInButton>
+                    <button className="btn btn-primary">Get Started</button>
+                  </SignInButton>
+                </SignedOut>
               </div>
             </div>
           </div>
-        )}
+
+          {error && (
+            <div className="toast toast-top toast-center">
+              <div className="alert alert-error">
+                <span>{error}</span>
+              </div>
+            </div>
+          )}
+
+          {isLoading && (
+            <div className="mt-8 text-center">
+              <span className="loading loading-lg loading-spinner text-primary"></span>
+              <p>Fetching the numbers from the oracle...</p>
+            </div>
+          )}
+
+          {smorfiaData.length > 0 && (
+            <div className="mt-8 card bg-base-200 shadow-xl w-full glass">
+              <div className="card-body">
+                <h2 className="card-title">La Smorfia Napoletana</h2>
+                <div className="overflow-x-auto">
+                  <table className="table table-zebra w-full">
+                    <thead>
+                      <tr>
+                        <th
+                          className="cursor-pointer w-1/4 text-right pr-2"
+                          onClick={() => requestSort('number')}
+                        >
+                          Number {getSortIndicator('number')}
+                        </th>
+                        <th
+                          className="cursor-pointer"
+                          onClick={() => requestSort('meaning')}
+                        >
+                          Meaning {getSortIndicator('meaning')}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {sortedSmorfiaData.map((item) => (
+                        <tr key={item.number}>
+                          <th className="text-right pr-2">{item.number}</th>
+                          <td className="pl-2 text-lg">{item.meaning}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </main>
 

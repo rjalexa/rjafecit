@@ -11,7 +11,7 @@ cd "$(dirname "$0")/.."
 export COMPOSE_BAKE=true
 
 # Start the services in the background
-docker compose up -d --build
+docker compose -f docker/docker-compose.yml up -d --build
 
 # Tail the logs of the services
-docker compose logs -f
+docker compose -f docker/docker-compose.yml logs -f
