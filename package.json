@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "npm-run-all --parallel dev:frontend dev:backend",
+    "dev:all": "pnpm dev",
     "dev:frontend": "next dev",
     "dev:backend": "cd backend && $(poetry env info --path)/bin/uvicorn main:app --reload --host 0.0.0.0 --port 8080",
     "build": "pnpm lint && next build",

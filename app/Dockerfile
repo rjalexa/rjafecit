@@ -42,4 +42,4 @@ EXPOSE 3000
 ENTRYPOINT []
 
 # Start the application in development mode
-CMD ["pnpm", "dev"]
+CMD ["pnpm", "dev:frontend"]

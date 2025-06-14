@@ -12,14 +12,14 @@ export default function Home() {
   const [smorfiaData, setSmorfiaData] = useState<SmorfiaEntry[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [theme, setTheme] = useState('rja-fecit');
+  const [theme, setTheme] = useState('system');
   const [sortConfig, setSortConfig] = useState<{
     key: keyof SmorfiaEntry;
     direction: 'ascending' | 'descending';
   } | null>(null);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || 'rja-fecit';
+    const savedTheme = localStorage.getItem('theme') || 'system';
     setTheme(savedTheme);
   }, []);
 
@@ -150,28 +150,6 @@ export default function Home() {
               tabIndex={0}
               className="dropdown-content z-[1] p-2 shadow-2xl bg-base-300 rounded-box w-52"
             >
-              <li>
-                <input
-                  type="radio"
-                  name="theme-dropdown"
-                  className="theme-controller btn btn-sm btn-block btn-ghost justify-start"
-                  aria-label="RJA Fecit"
-                  value="rja-fecit"
-                  checked={theme === 'rja-fecit'}
-                  onChange={() => handleThemeChange('rja-fecit')}
-                />
-              </li>
-              <li>
-                <input
-                  type="radio"
-                  name="theme-dropdown"
-                  className="theme-controller btn btn-sm btn-block btn-ghost justify-start"
-                  aria-label="Cyberpunk"
-                  value="cyberpunk"
-                  checked={theme === 'cyberpunk'}
-                  onChange={() => handleThemeChange('cyberpunk')}
-                />
-              </li>
               <li>
                 <input
                   type="radio"
