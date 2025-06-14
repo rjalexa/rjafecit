@@ -1,0 +1,368 @@
+{
+  "title": "Smorfia Napoletana - Numeri da 1 a 90",
+  "description": "La tradizionale smorfia napoletana con i significati classici dei 90 numeri per l'interpretazione dei sogni e il gioco del lotto",
+  "numbers": [
+    {
+      "number": 1,
+      "meaning": "L'Italia"
+    },
+    {
+      "number": 2,
+      "meaning": "La bambina"
+    },
+    {
+      "number": 3,
+      "meaning": "La gatta"
+    },
+    {
+      "number": 4,
+      "meaning": "Il maiale"
+    },
+    {
+      "number": 5,
+      "meaning": "La mano"
+    },
+    {
+      "number": 6,
+      "meaning": "Quella che guarda verso terra"
+    },
+    {
+      "number": 7,
+      "meaning": "Il Vaso"
+    },
+    {
+      "number": 8,
+      "meaning": "La Madonna"
+    },
+    {
+      "number": 9,
+      "meaning": "La figliolanza"
+    },
+    {
+      "number": 10,
+      "meaning": "I fagioli"
+    },
+    {
+      "number": 11,
+      "meaning": "I topi"
+    },
+    {
+      "number": 12,
+      "meaning": "Il soldato"
+    },
+    {
+      "number": 13,
+      "meaning": "Sant'Antonio"
+    },
+    {
+      "number": 14,
+      "meaning": "L'ubriaco"
+    },
+    {
+      "number": 15,
+      "meaning": "Il ragazzo"
+    },
+    {
+      "number": 16,
+      "meaning": "Il culo"
+    },
+    {
+      "number": 17,
+      "meaning": "La sfortuna"
+    },
+    {
+      "number": 18,
+      "meaning": "Il sangue"
+    },
+    {
+      "number": 19,
+      "meaning": "La risata"
+    },
+    {
+      "number": 20,
+      "meaning": "La festa"
+    },
+    {
+      "number": 21,
+      "meaning": "La donna nuda"
+    },
+    {
+      "number": 22,
+      "meaning": "Il pazzo"
+    },
+    {
+      "number": 23,
+      "meaning": "Lo scemo"
+    },
+    {
+      "number": 24,
+      "meaning": "Le guardie"
+    },
+    {
+      "number": 25,
+      "meaning": "Natale"
+    },
+    {
+      "number": 26,
+      "meaning": "Anna"
+    },
+    {
+      "number": 27,
+      "meaning": "L'orinale"
+    },
+    {
+      "number": 28,
+      "meaning": "Le tette"
+    },
+    {
+      "number": 29,
+      "meaning": "Il padre dei bimbi"
+    },
+    {
+      "number": 30,
+      "meaning": "Le palle del Tenente"
+    },
+    {
+      "number": 31,
+      "meaning": "Il padrone dell'abitazione"
+    },
+    {
+      "number": 32,
+      "meaning": "Il capitone"
+    },
+    {
+      "number": 33,
+      "meaning": "Gli anni di Cristo"
+    },
+    {
+      "number": 34,
+      "meaning": "La testa"
+    },
+    {
+      "number": 35,
+      "meaning": "L'uccello"
+    },
+    {
+      "number": 36,
+      "meaning": "Le nacchere"
+    },
+    {
+      "number": 37,
+      "meaning": "Il monaco"
+    },
+    {
+      "number": 38,
+      "meaning": "Le bastonate"
+    },
+    {
+      "number": 39,
+      "meaning": "La corda al collo"
+    },
+    {
+      "number": 40,
+      "meaning": "L'ernia"
+    },
+    {
+      "number": 41,
+      "meaning": "Il coltello"
+    },
+    {
+      "number": 42,
+      "meaning": "Il Caffè"
+    },
+    {
+      "number": 43,
+      "meaning": "Donna al balcone"
+    },
+    {
+      "number": 44,
+      "meaning": "Le carceri"
+    },
+    {
+      "number": 45,
+      "meaning": "Il buon vino"
+    },
+    {
+      "number": 46,
+      "meaning": "I soldi"
+    },
+    {
+      "number": 47,
+      "meaning": "Il morto"
+    },
+    {
+      "number": 48,
+      "meaning": "Il morto che parla"
+    },
+    {
+      "number": 49,
+      "meaning": "La carne"
+    },
+    {
+      "number": 50,
+      "meaning": "Il pane"
+    },
+    {
+      "number": 51,
+      "meaning": "Il giardino"
+    },
+    {
+      "number": 52,
+      "meaning": "La mamma"
+    },
+    {
+      "number": 53,
+      "meaning": "Il vecchio"
+    },
+    {
+      "number": 54,
+      "meaning": "Il cappello"
+    },
+    {
+      "number": 55,
+      "meaning": "La musica"
+    },
+    {
+      "number": 56,
+      "meaning": "La caduta"
+    },
+    {
+      "number": 57,
+      "meaning": "Il gobbo"
+    },
+    {
+      "number": 58,
+      "meaning": "Il cartoccio"
+    },
+    {
+      "number": 59,
+      "meaning": "I peli"
+    },
+    {
+      "number": 60,
+      "meaning": "Si lamenta"
+    },
+    {
+      "number": 61,
+      "meaning": "Il cacciatore"
+    },
+    {
+      "number": 62,
+      "meaning": "Il morto ammazzato"
+    },
+    {
+      "number": 63,
+      "meaning": "La sposa"
+    },
+    {
+      "number": 64,
+      "meaning": "La marsina"
+    },
+    {
+      "number": 65,
+      "meaning": "Il pianto"
+    },
+    {
+      "number": 66,
+      "meaning": "Le due zitelle"
+    },
+    {
+      "number": 67,
+      "meaning": "Il totano nella chitarra"
+    },
+    {
+      "number": 68,
+      "meaning": "La minestra cotta"
+    },
+    {
+      "number": 69,
+      "meaning": "Sottosopra"
+    },
+    {
+      "number": 70,
+      "meaning": "Il palazzo"
+    },
+    {
+      "number": 71,
+      "meaning": "L'uomo di merda"
+    },
+    {
+      "number": 72,
+      "meaning": "Lo stupore"
+    },
+    {
+      "number": 73,
+      "meaning": "L'ospedale"
+    },
+    {
+      "number": 74,
+      "meaning": "La grotta"
+    },
+    {
+      "number": 75,
+      "meaning": "Pulcinella"
+    },
+    {
+      "number": 76,
+      "meaning": "La fontana"
+    },
+    {
+      "number": 77,
+      "meaning": "I diavoli"
+    },
+    {
+      "number": 78,
+      "meaning": "La prostituta"
+    },
+    {
+      "number": 79,
+      "meaning": "Il ladro"
+    },
+    {
+      "number": 80,
+      "meaning": "La bocca"
+    },
+    {
+      "number": 81,
+      "meaning": "I fiori"
+    },
+    {
+      "number": 82,
+      "meaning": "La tavola imbandita"
+    },
+    {
+      "number": 83,
+      "meaning": "Il maltempo"
+    },
+    {
+      "number": 84,
+      "meaning": "La chiesa"
+    },
+    {
+      "number": 85,
+      "meaning": "Le anime del Purgatorio"
+    },
+    {
+      "number": 86,
+      "meaning": "Il negozio"
+    },
+    {
+      "number": 87,
+      "meaning": "I pidocchi"
+    },
+    {
+      "number": 88,
+      "meaning": "I caciocavalli"
+    },
+    {
+      "number": 89,
+      "meaning": "La vecchia"
+    },
+    {
+      "number": 90,
+      "meaning": "La paura"
+    }
+  ],
+  "source": "Tradizione napoletana classica",
+  "note": "La Smorfia Napoletana è una tradizione popolare utilizzata per interpretare i sogni e associarli a numeri da giocare al lotto. Ogni numero da 1 a 90 ha un significato simbolico specifico radicato nella cultura partenopea."
+}
