@@ -17,36 +17,39 @@ This project is a modern, production-ready web application built with a Next.js 
 
 ```mermaid
 graph TD
-    subgraph "User's Browser"
-        A[Next.js Frontend]
+    subgraph Browser
+        A[Client-side JavaScript]
     end
 
-    subgraph "Docker Environment"
-        subgraph "Web Service (Port 3000)"
-            B[Next.js Backend]
-            E[data/smorfia_napoletana.json]
-        end
-        subgraph "Backend Service (Port 8080)"
-            C[FastAPI Backend]
-        end
+    subgraph "Next.js Container"
+        B[Next.js Server]
+        C[API Route: /api/v1/smorfia]
+        E[Rewrite Engine]
     end
 
-    D[Clerk]
+    subgraph "FastAPI Container"
+        D[Python Backend on Port 8080]
+    end
 
-    A -- "/api/random" --> B
-    B -- "Proxies to /api/v1/random" --> C
-    A -- "/api/v1/smorfia" --> B
-    B -- "Reads from" --> E
-    A -- "Authentication" --> D
+    A -- "fetch('/api/v1/smorfia')" --> B
+    B -- "Handles internally" --> C
+    C -- "Response" --> B
+    B -- "Response" --> A
+
+    A -- "fetch('/api/v1/random')" --> B
+    B -- "Passes to Rewrite Engine" --> E
+    E -- "Proxies to http://backend:8080/api/v1/random" --> D
+    D -- "Response" --> E
+    E -- "Response" --> B
 ```
 
 ### Backend API
 
 The application uses two different backend endpoints to provide data to the frontend:
 
--   **/api/random**: This endpoint is a Next.js API route that acts as a proxy to the FastAPI backend. It forwards requests to the `/api/v1/random` endpoint on the backend service, which is running in a separate Docker container on port 8080. This approach is used to avoid CORS issues and to keep the frontend code clean and simple.
+-   **/api/v1/random**: This endpoint is proxied by the Next.js server to the FastAPI backend service running in a separate Docker container. The Next.js `rewrites` configuration handles this proxying, which avoids CORS issues and keeps the frontend code clean, as it can call a relative path.
 
--   **/api/v1/smorfia**: This endpoint is also a Next.js API route, but it is served directly by the Next.js backend. It reads the `smorfia_napoletana.json` file from the `data` directory and returns its contents to the frontend. This is a simple and efficient way to serve static data that does not require a separate backend service.
+-   **/api/v1/smorfia**: This endpoint is a standard Next.js API route, served directly by the Next.js server. It reads the `smorfia_napoletana.json` file from the `data` directory and returns its contents to the frontend.
 
 ### Authentication Flow
 

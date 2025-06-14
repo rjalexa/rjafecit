@@ -93,7 +93,7 @@ export default function Home() {
     try {
       // Fetch both endpoints concurrently
       const [randomRes, smorfiaRes] = await Promise.all([
-        fetch('/api/random'),
+        fetch('/api/v1/random'),
         fetch('/api/v1/smorfia'),
       ]);
 
