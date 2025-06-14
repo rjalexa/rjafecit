@@ -31,7 +31,7 @@ graph TD
         D[API Route: /api/v1/random]
     end
 
-     subgraph "FastAPI Container"
+     subgraph "Smorfia definitions"
         F[/data/smorfia.json on filesystem]
     end
 
