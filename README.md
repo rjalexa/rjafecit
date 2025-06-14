@@ -38,7 +38,7 @@ graph TD
 
     A -- "fetch('/api/v1/random')" --> B
     B -- "Passes to Rewrite Engine" --> E
-    E -- "Proxies to http://backend:8080/api/v1/random" --> D
+    E -- "Proxies to FastAPI container" --> D
     D -- "Response" --> E
     E -- "Response" --> B
 ```
