@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:backend": "cd backend && poetry run uvicorn main:app --reload",
+    "dev:all": "pnpm --parallel --filter \"rja-fecit@*\" --parallel dev",
     "build": "pnpm lint && next build",
     "start": "next start",
     "lint": "next lint",

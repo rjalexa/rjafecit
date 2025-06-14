@@ -28,8 +28,9 @@ graph TD
 
     D[Clerk]
 
-    A -- "Fetches random numbers" --> B
-    B -- "API Request" --> C
+    A -- "Fetches data" --> B
+    B -- "/api/random" --> C
+    B -- "/api/v1/smorfia" --> C
     A -- "Authentication" --> D
 ```
 
@@ -40,7 +41,6 @@ sequenceDiagram
     participant User
     participant Next.js Frontend
     participant Clerk
-    participant Backend API
 
     User->>Next.js Frontend: Accesses protected page
     Next.js Frontend->>Clerk: Redirects to login
@@ -48,8 +48,7 @@ sequenceDiagram
     Clerk-->>Next.js Frontend: Returns with JWT
     Next.js Frontend->>User: Renders protected page
     User->>Next.js Frontend: Clicks "Get Random"
-    Next.js Frontend->>Backend API: GET /api/v1/random
-    Backend API-->>Next.js Frontend: Returns random numbers
+    Next.js Frontend->>Next.js Frontend: Fetches random numbers
     Next.js Frontend->>User: Displays numbers
 ```
 
@@ -76,15 +75,16 @@ You will need to add your Clerk credentials to this file:
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 CLERK_SECRET_KEY=your_clerk_secret_key
 
-1. Log in to https://dashboard.clerk.com → select your app.
-2. Open API Keys in the left-hand navigation.
-
 # API Configuration
 RANDOM_API_BASE=http://backend:8080
 
 # Port Configuration
 PORT=3000
 ```
+
+To get your Clerk credentials:
+1. Log in to https://dashboard.clerk.com → select your app.
+2. Open API Keys in the left-hand navigation.
 
 ### Installation and Running
 
@@ -105,24 +105,30 @@ PORT=3000
 
 #### Docker
 
-1.  **Build the Docker images:**
+1.  **Build and run the Docker containers:**
     ```bash
-    ./docker/scripts/build.sh
-    ```
-
-2.  **Start the services:**
-    ```bash
-    ./docker/scripts/start.sh
+    ./docker/buildrun.sh
     ```
 
     The application will be available at `http://localhost:3000`.
 
+## Backend Development
+
+The FastAPI backend includes automatically generated documentation via Swagger UI. To access it, run the backend server and navigate to `http://localhost:8000/docs`.
+
+```bash
+pnpm dev:backend
+```
+
 ## Scripts
 
-- `pnpm dev`: Starts the development server.
+- `pnpm dev`: Starts the Next.js development server.
+- `pnpm dev:backend`: Starts the FastAPI backend server.
+- `pnpm dev:all`: Starts both the Next.js and FastAPI servers concurrently.
 - `pnpm build`: Builds the application for production.
 - `pnpm start`: Starts the production server.
 - `pnpm lint`: Lints the codebase.
 - `pnpm test`: Runs unit and integration tests.
 - `pnpm test:e2e`: Runs end-to-end tests.
 - `pnpm load-test`: Runs a load test with k6.
+- `pnpm prepare`: Sets up Husky for pre-commit hooks.
