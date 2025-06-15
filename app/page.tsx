@@ -20,14 +20,14 @@ export default function Home() {
   const [smorfiaData, setSmorfiaData] = useState<SmorfiaEntry[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [theme, setTheme] = useState('system');
+  const [theme, setTheme] = useState('pastel-light');
   const [sortConfig, setSortConfig] = useState<{
     key: keyof SmorfiaEntry;
     direction: 'ascending' | 'descending';
   } | null>(null);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || 'system';
+    const savedTheme = localStorage.getItem('theme') || 'pastel-light';
     setTheme(savedTheme);
   }, []);
 
@@ -170,6 +170,28 @@ export default function Home() {
                   type="radio"
                   name="theme-dropdown"
                   className="theme-controller btn btn-sm btn-block btn-ghost justify-start"
+                  aria-label="Pastel Light"
+                  value="pastel-light"
+                  checked={theme === 'pastel-light'}
+                  onChange={() => handleThemeChange('pastel-light')}
+                />
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  name="theme-dropdown"
+                  className="theme-controller btn btn-sm btn-block btn-ghost justify-start"
+                  aria-label="Pastel Dark"
+                  value="pastel-dark"
+                  checked={theme === 'pastel-dark'}
+                  onChange={() => handleThemeChange('pastel-dark')}
+                />
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  name="theme-dropdown"
+                  className="theme-controller btn btn-sm btn-block btn-ghost justify-start"
                   aria-label="Light"
                   value="light"
                   checked={theme === 'light'}
@@ -226,7 +248,7 @@ export default function Home() {
                     Click the button below to fetch a new set of random numbers.
                   </p>
                   <button
-                    className="btn btn-primary"
+                    className="btn btn-primary shadow-lg hover:shadow-xl transition-all duration-200"
                     onClick={fetchSmorfiaData}
                     disabled={isLoading}
                   >
@@ -236,10 +258,10 @@ export default function Home() {
                 <SignedOut>
                   <h1 className="text-5xl font-bold">Hello there</h1>
                   <p className="py-6">
-                    Please <SignInButton><a className="link">sign in</a></SignInButton> to use the application.
+                    Please <SignInButton><a className="link link-primary">sign in</a></SignInButton> to use the application.
                   </p>
                   <SignInButton>
-                    <button className="btn btn-primary">Get Started</button>
+                    <button className="btn btn-primary shadow-lg hover:shadow-xl transition-all duration-200">Get Started</button>
                   </SignInButton>
                 </SignedOut>
               </div>
@@ -262,32 +284,52 @@ export default function Home() {
           )}
 
           {smorfiaData.length > 0 && (
-            <div className="mt-8 card bg-base-200 shadow-xl w-full glass">
+            <div className="mt-8 card bg-gradient-to-br from-base-200 to-base-300 shadow-xl w-full border border-primary/10">
               <div className="card-body">
-                <h2 className="card-title">La Smorfia Napoletana</h2>
+                <h2 className="card-title text-primary mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 bg-accent rounded-full"></span>
+                  La Smorfia Napoletana
+                  <span className="w-2 h-2 bg-secondary rounded-full"></span>
+                </h2>
                 <div className="overflow-x-auto">
-                  <table className="table table-zebra w-full">
+                  <table className="table w-full">
                     <thead>
-                      <tr>
+                      <tr className="border-b-2 border-primary/20">
                         <th
-                          className="cursor-pointer w-1/4 text-right pr-2"
+                          className="cursor-pointer w-1/4 text-right pr-4 bg-gradient-to-r from-primary/5 to-secondary/5 hover:from-primary/10 hover:to-secondary/10 transition-all duration-200 rounded-l-lg"
                           onClick={() => requestSort('number')}
                         >
-                          Number {getSortIndicator('number')}
+                          <span className="text-primary font-semibold">Number {getSortIndicator('number')}</span>
                         </th>
                         <th
-                          className="cursor-pointer"
+                          className="cursor-pointer bg-gradient-to-r from-secondary/5 to-accent/5 hover:from-secondary/10 hover:to-accent/10 transition-all duration-200 rounded-r-lg"
                           onClick={() => requestSort('meaning')}
                         >
-                          Meaning {getSortIndicator('meaning')}
+                          <span className="text-secondary font-semibold">Meaning {getSortIndicator('meaning')}</span>
                         </th>
                       </tr>
                     </thead>
                     <tbody>
-                      {sortedSmorfiaData.map((item) => (
-                        <tr key={item.number}>
-                          <th className="text-right pr-2">{item.number}</th>
-                          <td className="pl-2 text-lg">{item.meaning}</td>
+                      {sortedSmorfiaData.map((item, index) => (
+                        <tr 
+                          key={item.number} 
+                          className={`
+                            hover:bg-gradient-to-r hover:from-primary/5 hover:to-accent/5 
+                            transition-all duration-200 border-b border-base-300/50
+                            ${index % 2 === 0 ? 'bg-base-100/50' : 'bg-base-200/30'}
+                          `}
+                        >
+                          <th className="text-right pr-4 font-mono text-lg">
+                            <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 text-primary font-bold">
+                              {item.number}
+                            </span>
+                          </th>
+                          <td className="pl-4 text-lg relative">
+                            <div className="flex items-center gap-3">
+                              <span className="w-1 h-6 bg-gradient-to-b from-accent/60 to-secondary/60 rounded-full"></span>
+                              <span className="text-base-content/90">{item.meaning}</span>
+                            </div>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
