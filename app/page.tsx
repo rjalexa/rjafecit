@@ -227,7 +227,7 @@ export default function Home() {
                 <SignedOut>
                   <h1 className="text-5xl font-bold">Hello there</h1>
                   <p className="py-6">
-                    Please log in to use the application.
+                    Please <SignInButton><a className="link">sign in</a></SignInButton> to use the application.
                   </p>
                   <SignInButton>
                     <button className="btn btn-primary">Get Started</button>
@@ -292,7 +292,7 @@ export default function Home() {
 
       <footer className="footer footer-center p-4 bg-base-300 text-base-content">
         <aside>
-          <p>Copyright © 2024 - All right reserved by RJA Industries Ltd</p>
+          <p>© 2025 R. Alexander. All rights reserved. Licensed under the MIT License.<br></br> Contributions and collaborations are welcome</p>
         </aside>
       </footer>
     </div>
