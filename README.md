@@ -62,7 +62,7 @@ flowchart TB
 
 The application uses two different backend endpoints to provide data to the frontend:
 
--   **/api/v1/random**: This endpoint is proxied by the Next.js server to the FastAPI backend service running in a separate Docker container. The Next.js `rewrites` configuration handles this proxying, which avoids CORS issues and keeps the frontend code clean, as it can call a relative path.
+-   **/api/v1/random**: This endpoint is proxied by the Next.js server to the FastAPI backend service running in a separate Docker container. The Next.js `rewrites` configuration handles this proxying, which avoids CORS issues and keeps the frontend code clean, as it can call a relative path. NOTE: we had to explicitely disablee the caching within next.js or the numbers from the frontend would not change.
 
 -   **/api/v1/smorfia**: This endpoint is a standard Next.js API route, served directly by the Next.js server. It queries the SQLite database using Drizzle ORM to fetch and return the Smorfia Napoletana data to the frontend.
 
