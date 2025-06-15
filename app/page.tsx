@@ -284,57 +284,49 @@ export default function Home() {
           )}
 
           {smorfiaData.length > 0 && (
-            <div className="mt-8 card bg-gradient-to-br from-base-200 to-base-300 shadow-xl w-full border border-primary/10">
-              <div className="card-body">
-                <h2 className="card-title text-primary mb-4 flex items-center gap-2">
+            <div className="mt-8">
+              <div className="mb-6 text-center">
+                <h2 className="text-2xl font-bold text-primary mb-2 flex items-center justify-center gap-2">
                   <span className="w-2 h-2 bg-accent rounded-full"></span>
                   La Smorfia Napoletana
                   <span className="w-2 h-2 bg-secondary rounded-full"></span>
                 </h2>
-                <div className="overflow-x-auto">
-                  <table className="table w-full">
-                    <thead>
-                      <tr className="border-b-2 border-primary/20">
-                        <th
-                          className="cursor-pointer w-1/4 text-right pr-4 bg-gradient-to-r from-primary/5 to-secondary/5 hover:from-primary/10 hover:to-secondary/10 transition-all duration-200 rounded-l-lg"
-                          onClick={() => requestSort('number')}
-                        >
-                          <span className="text-primary font-semibold">Number {getSortIndicator('number')}</span>
-                        </th>
-                        <th
-                          className="cursor-pointer bg-gradient-to-r from-secondary/5 to-accent/5 hover:from-secondary/10 hover:to-accent/10 transition-all duration-200 rounded-r-lg"
-                          onClick={() => requestSort('meaning')}
-                        >
-                          <span className="text-secondary font-semibold">Meaning {getSortIndicator('meaning')}</span>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {sortedSmorfiaData.map((item, index) => (
-                        <tr 
-                          key={item.number} 
-                          className={`
-                            hover:bg-gradient-to-r hover:from-primary/5 hover:to-accent/5 
-                            transition-all duration-200 border-b border-base-300/50
-                            ${index % 2 === 0 ? 'bg-base-100/50' : 'bg-base-200/30'}
-                          `}
-                        >
-                          <th className="text-right pr-4 font-mono text-lg">
-                            <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 text-primary font-bold">
-                              {item.number}
-                            </span>
-                          </th>
-                          <td className="pl-4 text-lg relative">
-                            <div className="flex items-center gap-3">
-                              <span className="w-1 h-6 bg-gradient-to-b from-accent/60 to-secondary/60 rounded-full"></span>
-                              <span className="text-base-content/90">{item.meaning}</span>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                <div className="flex justify-center gap-4 text-sm">
+                  <button
+                    className="btn btn-ghost btn-sm"
+                    onClick={() => requestSort('number')}
+                  >
+                    Sort by Number {getSortIndicator('number')}
+                  </button>
+                  <button
+                    className="btn btn-ghost btn-sm"
+                    onClick={() => requestSort('meaning')}
+                  >
+                    Sort by Meaning {getSortIndicator('meaning')}
+                  </button>
                 </div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {sortedSmorfiaData.map((item) => (
+                  <div 
+                    key={item.number}
+                    className="card bg-gradient-to-br from-base-100 to-base-200 shadow-lg hover:shadow-xl transition-all duration-300 border border-primary/10 hover:border-primary/20"
+                  >
+                    <div className="card-body p-3 text-center">
+                      <div className="mb-2">
+                        <div className="badge badge-primary font-mono font-bold text-base px-2 py-2">
+                          {item.number}
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-base-content font-serif text-base leading-snug">
+                          {item.meaning}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           )}
