@@ -123,7 +123,7 @@ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 CLERK_SECRET_KEY=your_clerk_secret_key
 
 # API Configuration
-NEXT_PUBLIC_BACKEND_API_BASE=http://localhost:8080
+API_BASE_URL=http://localhost:8080
 
 # Port Configuration
 PORT=3000
@@ -147,7 +147,7 @@ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 CLERK_SECRET_KEY=your_clerk_secret_key
 
 # API Configuration
-NEXT_PUBLIC_BACKEND_API_BASE=http://backend:8080
+API_BASE_URL=http://backend:8080
 
 # Port Configuration
 PORT=3000

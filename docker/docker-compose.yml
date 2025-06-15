@@ -10,13 +10,23 @@ services:
     env_file:
       - ../.env.docker
     depends_on:
-      - backend
+      backend:
+        condition: service_started
     volumes:
       - ..:/app
       - /app/node_modules
       - /app/.next
       - ../data:/app/data  # Mount data directory for SQLite database persistence
+    networks:
+      - app-network
   backend:
+    container_name: rjafecit-backend
     build: ../backend
     ports:
       - "8080:8080"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
