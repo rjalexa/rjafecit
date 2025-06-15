@@ -6,6 +6,10 @@ import { join } from 'path';
 async function main() {
   console.log('Seeding database...');
   
+  // Clear existing data first
+  console.log('Clearing existing smorfia data...');
+  await db.delete(smorfia);
+  
   // Read the JSON file from the filesystem instead of importing it
   const dataPath = join(process.cwd(), 'data', 'smorfia_napoletana.json');
   const jsonData = JSON.parse(readFileSync(dataPath, 'utf-8'));
