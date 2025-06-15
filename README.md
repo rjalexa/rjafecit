@@ -17,40 +17,45 @@ This project is a modern, production-ready web application built with a Next.js 
 ### High-Level Architecture
 
 ```mermaid
-graph TD
-    subgraph Browser
-        A[Client-side JavaScript]
-    end
+flowchart TB
+  %% Top: Browser
+  subgraph Browser
+    direction TB
+    JS[Client-side JavaScript]
+  end
 
-    subgraph "Next.js Container"
-        B[Next.js Server]
-        C[API Route: /api/v1/smorfia]
-        E[Rewrite Engine]
-        G[Drizzle ORM]
-    end
+  %% Middle: Next.js container (with Drizzle ORM inside)
+  subgraph NextJS["Next.js Container"]
+    direction TB
+    NJS[Next.js Server]
+    API1[/API Route: /api/v1/smorfia/]
+    DRM[(SQLite DB<br/>via Drizzle ORM)]
+    RE[Rewrite Engine]
+  end
 
-    subgraph "Database"
-        F[SQLite Database (data/smorfia.db)]
-    end
+  %% Bottom-right: FastAPI container
+  subgraph FastAPI["FastAPI Container"]
+    FAPI[/API Route: /api/v1/random/]
+  end
 
-    subgraph "FastAPI Container"
-        D[API Route: /api/v1/random]
-    end
+  %% Client <> Next.js
+  JS -- "fetch('/api/v1/smorfia')" --> NJS
+  JS -- "fetch('/api/v1/random')" --> NJS
+  NJS -- "Response" --> JS
 
-    A -- "fetch('/api/v1/smorfia')" --> B
-    B -- "Handles internally" --> C
-    C -- "Uses" --> G
-    G -- "Queries" --> F
-    F -- "Returns data" --> G
-    G -- "Returns data" --> C
-    C -- "Response" --> B
-    B -- "Response" --> A
+  %% Next.js <> internal API & Drizzle
+  NJS -- "Handles internally" --> API1
+  API1 -- "Queries" --> DRM
+  DRM -- "Response" --> API1
+  API1 -- "Response" --> NJS
 
-    A -- "fetch('/api/v1/random')" --> B
-    B -- "Passes to Rewrite Engine" --> E
-    E -- "Proxies to FastAPI container" --> D
-    D -- "Response" --> E
-    E -- "Response" --> B
+  %% Next.js <> Rewrite Engine
+  NJS -- "Passes to Rewrite Engine" --> RE
+  RE -- "Response" --> NJS
+
+  %% Rewrite <> FastAPI
+  RE -->|Proxies to FastAPI container| FAPI
+  FAPI -- "Response" --> RE
 ```
 
 ### Backend API
