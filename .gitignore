@@ -42,3 +42,6 @@ __pycache__/
 .Python
 env/
 venv/
+
+# Database
+data/*.db

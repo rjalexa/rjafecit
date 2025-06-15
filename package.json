@@ -13,10 +13,15 @@
     "test": "vitest",
     "test:e2e": "playwright test",
     "load-test": "k6 run tests/load.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx scripts/migrate.ts",
+    "db:seed": "tsx scripts/seed.ts",
     "prepare": "husky install"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.15.0",
+    "@libsql/client": "^0.15.9",
+    "drizzle-orm": "^0.44.2",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18"
@@ -33,6 +38,7 @@
     "@vitejs/plugin-react": "^4.3.0",
     "autoprefixer": "^10.4.21",
     "daisyui": "^4.12.2",
+    "drizzle-kit": "^0.31.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "eslint-config-prettier": "^9.1.0",
@@ -44,6 +50,7 @@
     "prettier": "^3.3.1",
     "supertest": "^7.0.0",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.20.3",
     "typescript": "^5",
     "vitest": "^1.6.0"
   }

@@ -6,6 +6,7 @@ This project is a modern, production-ready web application built with a Next.js 
 
 - **Front-end:** Next.js 14 with App Router, React 18, TypeScript, Tailwind CSS, and daisyUI.
 - **Back-end:** FastAPI with Python 3.12.
+- **Database:** SQLite with Drizzle ORM for data persistence and schema management.
 - **Authentication:** Clerk for user authentication.
 - **Containerization:** Docker and Docker Compose for local development and production builds.
 - **Development Tools:** ESLint, Prettier, Husky, lint-staged, Vitest, React Testing Library, and k6 for load testing.
@@ -25,19 +26,23 @@ graph TD
         B[Next.js Server]
         C[API Route: /api/v1/smorfia]
         E[Rewrite Engine]
+        G[Drizzle ORM]
+    end
+
+    subgraph "Database"
+        F[SQLite Database (data/smorfia.db)]
     end
 
     subgraph "FastAPI Container"
         D[API Route: /api/v1/random]
     end
 
-    subgraph "Smorfia definitions"
-        F["/data/smorfia.json on filesystem"]
-    end
-
     A -- "fetch('/api/v1/smorfia')" --> B
     B -- "Handles internally" --> C
-    C -- "Reads" --> F
+    C -- "Uses" --> G
+    G -- "Queries" --> F
+    F -- "Returns data" --> G
+    G -- "Returns data" --> C
     C -- "Response" --> B
     B -- "Response" --> A
 
@@ -46,7 +51,6 @@ graph TD
     E -- "Proxies to FastAPI container" --> D
     D -- "Response" --> E
     E -- "Response" --> B
-
 ```
 
 ### Backend API
@@ -55,7 +59,16 @@ The application uses two different backend endpoints to provide data to the fron
 
 -   **/api/v1/random**: This endpoint is proxied by the Next.js server to the FastAPI backend service running in a separate Docker container. The Next.js `rewrites` configuration handles this proxying, which avoids CORS issues and keeps the frontend code clean, as it can call a relative path.
 
--   **/api/v1/smorfia**: This endpoint is a standard Next.js API route, served directly by the Next.js server. It reads the `smorfia_napoletana.json` file from the `data` directory and returns its contents to the frontend.
+-   **/api/v1/smorfia**: This endpoint is a standard Next.js API route, served directly by the Next.js server. It queries the SQLite database using Drizzle ORM to fetch and return the Smorfia Napoletana data to the frontend.
+
+### Database Architecture
+
+The application uses SQLite as its database with Drizzle ORM for type-safe database operations:
+
+- **Database Location**: `data/smorfia.db` (SQLite file)
+- **ORM**: Drizzle ORM with LibSQL client
+- **Schema Management**: TypeScript-based schema definitions with migration support
+- **Data**: 90 entries of traditional Neapolitan Smorfia numbers and meanings
 
 ### Authentication Flow
 
@@ -148,7 +161,19 @@ PORT=3000
     pnpm install
     ```
 
-2.  **Run the development server:**
+2.  **Set up the database:**
+    ```bash
+    # Generate database migrations
+    pnpm db:generate
+    
+    # Run migrations to create tables
+    pnpm db:migrate
+    
+    # Seed the database with Smorfia data
+    pnpm db:seed
+    ```
+
+3.  **Run the development server:**
     This will start the Next.js front-end and the FastAPI back-end concurrently.
     ```bash
     pnpm dev
@@ -164,6 +189,51 @@ PORT=3000
     ```
 
     The application will be available at `http://localhost:3000`.
+
+    **Note:** The Docker build process automatically handles database setup, including migration generation, table creation, and data seeding.
+
+## Database Management
+
+This project uses SQLite with Drizzle ORM for data persistence. The database setup includes:
+
+### Database Schema
+
+The database contains a single `smorfia` table with the following structure:
+
+- `number` (INTEGER, PRIMARY KEY): The Smorfia number (1-90)
+- `meaning` (TEXT, NOT NULL): The traditional meaning associated with the number
+
+### Database Scripts
+
+- `pnpm db:generate`: Generate SQL migration files from schema changes
+- `pnpm db:migrate`: Apply pending migrations to the database
+- `pnpm db:seed`: Populate the database with initial Smorfia data from JSON
+
+### Database Location
+
+- **Local Development**: `data/smorfia.db` (created automatically)
+- **Docker**: Database file is built into the container and persisted via volume mount
+
+### Schema Changes
+
+To modify the database schema:
+
+1. Update the schema definition in `lib/db/schema.ts`
+2. Generate a new migration: `pnpm db:generate`
+3. Apply the migration: `pnpm db:migrate`
+
+The migration system ensures data integrity during schema updates.
+
+### Data Loading
+
+The initial database is populated from `data/smorfia_napoletana.json`. If you need to reload the data:
+
+```bash
+# Clear and reseed the database (development only)
+rm data/smorfia.db
+pnpm db:migrate
+pnpm db:seed
+```
 
 ## Backend Development
 
@@ -184,4 +254,26 @@ pnpm dev:backend
 - `pnpm test`: Runs unit and integration tests.
 - `pnpm test:e2e`: Runs end-to-end tests.
 - `pnpm load-test`: Runs a load test with k6.
+- `pnpm db:generate`: Generate database migration files.
+- `pnpm db:migrate`: Apply database migrations.
+- `pnpm db:seed`: Seed database with initial data.
 - `pnpm prepare`: Sets up Husky for pre-commit hooks.
+
+## Docker Configuration
+
+The Docker setup has been optimized for the SQLite database:
+
+- **Database Persistence**: The `data` directory is mounted as a volume to persist the SQLite database across container restarts
+- **Build-time Setup**: Database migrations and seeding occur during the Docker build process
+- **Production Ready**: The container includes all necessary database files and dependencies
+
+### Volume Mounting
+
+The Docker Compose configuration mounts the `data` directory to ensure database persistence:
+
+```yaml
+volumes:
+  - ../data:/app/data  # SQLite database persistence
+```
+
+This ensures that your database data persists even when containers are recreated.

@@ -16,6 +16,15 @@ RUN pnpm install
 # Copy the rest of the application
 COPY . .
 
+# Create data directory and copy JSON file
+RUN mkdir -p data
+COPY data/smorfia_napoletana.json ./data/
+
+# Generate migrations and run database setup
+RUN pnpm db:generate
+RUN pnpm db:migrate
+RUN pnpm db:seed
+
 # Build the Next.js application
 RUN pnpm build
 
@@ -32,6 +41,9 @@ RUN npm install -g pnpm
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/data ./data
+COPY --from=builder /app/lib ./lib
+COPY --from=builder /app/drizzle ./drizzle
 
 # Expose the port the app runs on
 EXPOSE 3000
@@ -41,5 +53,5 @@ EXPOSE 3000
 # We reset the entrypoint to execute the CMD directly.
 ENTRYPOINT []
 
-# Start the application in development mode
-CMD ["pnpm", "dev:frontend"]
+# Start the application in production mode
+CMD ["pnpm", "start"]
