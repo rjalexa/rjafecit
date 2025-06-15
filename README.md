@@ -29,8 +29,8 @@ flowchart TB
     direction TB
     NJS[Next.js Server]
     API1[/API Route: /api/v1/smorfia/]
+    API2[/API Route: /api/v1/random/]
     DRM[(SQLite DB<br/>via Drizzle ORM)]
-    RE[Rewrite Engine]
   end
 
   %% Bottom-right: FastAPI container
@@ -49,20 +49,18 @@ flowchart TB
   DRM -- "Response" --> API1
   API1 -- "Response" --> NJS
 
-  %% Next.js <> Rewrite Engine
-  NJS -- "Passes to Rewrite Engine" --> RE
-  RE -- "Response" --> NJS
-
-  %% Rewrite <> FastAPI
-  RE -->|Proxies to FastAPI container| FAPI
-  FAPI -- "Response" --> RE
+  %% Next.js API Route <> FastAPI
+  NJS -- "Handles internally" --> API2
+  API2 -- "Fetches from" --> FAPI
+  FAPI -- "Response" --> API2
+  API2 -- "Response" --> NJS
 ```
 
 ### Backend API
 
 The application uses two different backend endpoints to provide data to the frontend:
 
--   **/api/v1/random**: This endpoint is proxied by the Next.js server to the FastAPI backend service running in a separate Docker container. The Next.js `rewrites` configuration handles this proxying, which avoids CORS issues and keeps the frontend code clean, as it can call a relative path. NOTE: we had to explicitely disablee the caching within next.js or the numbers from the frontend would not change.
+-   **/api/v1/random**: This endpoint is implemented as a Next.js API route that acts as a proxy to the FastAPI backend service running in a separate Docker container. The API route makes a server-side fetch request to the FastAPI backend, which avoids CORS issues and keeps the frontend code clean, as it can call a relative path. The implementation explicitly disables caching using `cache: 'no-store'` in the fetch request and sets no-cache headers in the response to ensure fresh random numbers are returned on each request.
 
 -   **/api/v1/smorfia**: This endpoint is a standard Next.js API route, served directly by the Next.js server. It queries the SQLite database using Drizzle ORM to fetch and return the Smorfia Napoletana data to the frontend.
 
