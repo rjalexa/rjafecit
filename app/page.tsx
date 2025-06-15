@@ -7,6 +7,7 @@ import {
   SignedOut,
   SignInButton,
   UserButton,
+  useUser,
 } from '@clerk/nextjs';
 
 interface SmorfiaEntry {
@@ -15,6 +16,7 @@ interface SmorfiaEntry {
 }
 
 export default function Home() {
+  const { isSignedIn, isLoaded } = useUser();
   const [smorfiaData, setSmorfiaData] = useState<SmorfiaEntry[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -47,6 +49,13 @@ export default function Home() {
       document.documentElement.setAttribute('data-theme', theme);
     }
   }, [theme]);
+
+  // Auto-fetch data when user is signed in
+  useEffect(() => {
+    if (isLoaded && isSignedIn && smorfiaData.length === 0) {
+      fetchSmorfiaData();
+    }
+  }, [isLoaded, isSignedIn, smorfiaData.length]);
 
   const handleThemeChange = (newTheme: string) => {
     setTheme(newTheme);
