@@ -62,6 +62,53 @@ The application uses two different backend endpoints to provide data to the fron
 
 -   **/api/v1/random**: This endpoint is implemented as a Next.js API route that acts as a proxy to the FastAPI backend service running in a separate Docker container. The API route makes a server-side fetch request to the FastAPI backend, which avoids CORS issues and keeps the frontend code clean, as it can call a relative path. The implementation explicitly disables caching using `cache: 'no-store'` in the fetch request and sets no-cache headers in the response to ensure fresh random numbers are returned on each request.
 
+    By using a relative path, you keep your frontend code environment-agnostic (it works in development, staging, and production without changes) and you avoid CORS, since the call stays on the same origin and is handled by your Next.js API route proxy.
+
+    ```mermaid
+    sequenceDiagram
+        autonumber
+        participant Browser
+        participant NextJS as Next.js Server
+        participant FastAPI as FastAPI Backend
+
+        Browser->>NextJS: GET /api/v1/random  
+        Note right of Browser: (1) relative path, same-origin
+        NextJS->>FastAPI: GET http://backend:8080/api/v1/random  
+        Note right of NextJS: (2) absolute URL in Docker network
+        FastAPI-->>NextJS: 200 { "value": 0.1234 }
+        NextJS-->>Browser: 200 { "value": 0.1234 }  
+        Note left of NextJS: (3) piped back with no-cache headers
+    ```
+
+    **Step-by-step:**
+
+    1. **Browser → Next.js Server**  
+       The browser (or client-side code) calls:
+       ```javascript
+       fetch('/api/v1/random', { cache: 'no-store' })
+       ```
+       This uses the relative path `/api/v1/random`, so it stays on the same origin that served the app.
+
+    2. **Next.js Server → FastAPI Backend**  
+       The Next.js API route (server-side) forwards the request to your FastAPI container at:
+       ```bash
+       http://backend:8080/api/v1/random
+       ```
+       This is an absolute URL within your Docker network.
+
+    3. **FastAPI Backend → Next.js Server**  
+       FastAPI returns the JSON payload, e.g.:
+       ```json
+       { "value": 0.1234 }
+       ```
+
+    4. **Next.js Server → Browser**  
+       Next.js pipes that response back to the browser, attaching:
+       ```yaml
+       Cache-Control: no-store
+       ```
+       so every fetch returns fresh data.
+
 -   **/api/v1/smorfia**: This endpoint is a standard Next.js API route, served directly by the Next.js server. It queries the SQLite database using Drizzle ORM to fetch and return the Smorfia Napoletana data to the frontend.
 
 ### Database Architecture
